@@ -6,7 +6,7 @@ dotenv.config();
 
 const app = express();
 const port = process.env.PORT || 80;
-const interval = Number(process.env.SCRAPE_INTERVAL) || 5000; // ms
+const interval = Number(process.env.SCRAPE_INTERVAL) || 30_0000; // 5 mins
 const bearer = process.env.BEARER || "";
 
 app.use(express.json());
