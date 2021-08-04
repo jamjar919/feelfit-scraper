@@ -1,0 +1,52 @@
+{
+  "name": "feelfit-scraper",
+  "version": "1.0.0",
+  "description": "Scrape scrape scrape",
+  "main": "src/client/index.js",
+  "repository": "https://github.com/jamjar919/feelfit-scraper.git",
+  "author": "James Paterson",
+  "license": "MIT",
+  "dependencies": {
+    "csv-writer": "^1.6.0",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "node-fetch": "^2.6.1",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
+  },
+  "scripts": {
+    "build": "npm-run-all assemble test",
+    "assemble": "npm-run-all build:server build:client",
+    "test": "jest",
+    "start": "node ./dist/server.js",
+    "build:server": "npx webpack --config webpack.config.server.js",
+    "build:server:dev": "npx webpack -w --config webpack.config.server.js",
+    "build:client": "npx webpack --config webpack.config.client.js",
+    "build:client:dev": "npx webpack -w --config webpack.config.client.js"
+  },
+  "engines": {
+    "node": ">=14.15.0"
+  },
+  "babel": {
+    "presets": [
+      "@babel/preset-env",
+      "@babel/react"
+    ]
+  },
+  "devDependencies": {
+    "@svgr/webpack": "^5.5.0",
+    "@types/express": "^4.17.13",
+    "@types/node-fetch": "^2.5.12",
+    "@types/react": "^17.0.15",
+    "babel-loader": "^8.2.2",
+    "css-loader": "^6.2.0",
+    "html-webpack-plugin": "^5.3.2",
+    "mini-css-extract-plugin": "^2.1.0",
+    "nodemon-webpack-plugin": "^4.5.2",
+    "sass-loader": "^12.1.0",
+    "ts-loader": "^9.2.5",
+    "typescript": "^4.3.5",
+    "webpack": "^5.48.0",
+    "webpack-cli": "^4.7.2"
+  }
+}
