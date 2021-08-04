@@ -1,3 +1,4 @@
 export enum Path {
-    MAIN = '/'
+    MAIN = '/',
+    GET_COUNT = '/api/count'
 }

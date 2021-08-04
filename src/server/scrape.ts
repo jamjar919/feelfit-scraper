@@ -50,4 +50,4 @@ const startScraping = (interval: number, bearer: string) => {
     setInterval(() => doScrape(bearer), interval);
 };
 
-export { startScraping };
+export { startScraping, LOG_FILE };
