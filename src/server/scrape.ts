@@ -29,7 +29,7 @@ const writeLogEntry = (data: WhoIsInCountResponse): Promise<void> => {
 const doScrape = (bearer: string) => {
     whoIsInCount(bearer)
         .then((data) => writeLogEntry(data))
-        .then(() => console.log('Success!'))
+        .then(() => console.log(`[${new Date().toTimeString()}] Successfully scraped`))
         .catch((err) => {
             console.error(err);
         })
@@ -47,6 +47,7 @@ const startScraping = (interval: number, bearer: string) => {
             throw e;
         });
 
+    doScrape(bearer);
     setInterval(() => doScrape(bearer), interval);
 };
 
