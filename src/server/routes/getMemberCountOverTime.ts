@@ -5,8 +5,10 @@ import {getCountFromDatabase} from "../db/getCountFromDatabase";
 /**
  * Return the logs via an endpoint to be consumed by the FE
  */
-const getMemberCountOverTime =  (_req: Request, res: Response) => {
-    getCountFromDatabase((data: MemberCountResponse) => {
+const getMemberCountOverTime =  (req: Request, res: Response) => {
+    const date: Date = new Date(Date.parse(req.query["date"] as string));
+
+    getCountFromDatabase(date, (data: MemberCountResponse) => {
         res.send(data)
     });
 }

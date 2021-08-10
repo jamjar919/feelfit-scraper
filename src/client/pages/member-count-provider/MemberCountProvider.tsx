@@ -12,7 +12,7 @@ const MemberCountProvider: React.FC = (props) => {
     useEffect(() => {
         setValue([]);
 
-        fetch(Path.GET_COUNT)
+        fetch(`${Path.GET_COUNT}?date=${new Date().toISOString()}`)
             .then((resp) => resp.json())
             .then((data) => setValue(data))
             .catch((error) => {

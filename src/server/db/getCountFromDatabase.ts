@@ -1,10 +1,18 @@
 import {connectionPool} from "./db";
 import {MemberCountResponse} from "../../common/ApiResponse";
 
-const QUERY = "SELECT * FROM `feelfit` ORDER BY `timestamp` DESC"
+const QUERY = "SELECT * FROM `feelfit` WHERE DATE(timestamp) = ? ORDER BY `timestamp` DESC"
 
-const getCountFromDatabase = (handleResults: (results: MemberCountResponse) => void) => {
-    connectionPool.query(QUERY, (error, results) => {
+const convertDateToMySqlDate = (date: Date) => date
+    .toISOString()
+    .slice(0, 10);
+
+const getCountFromDatabase = (date: Date, handleResults: (results: MemberCountResponse) => void) => {
+    const timestamp = convertDateToMySqlDate(date);
+
+    console.log(timestamp);
+
+    connectionPool.query(QUERY, timestamp, (error, results) => {
         if (error) throw error;
 
         const filteredResults: MemberCountResponse = results
