@@ -49,7 +49,10 @@ const MemberCountGraph: React.FC = () => {
                 return ({
                     label: Weekday[dayOfWeek],
                     data: entries,
-                    backgroundColor: colour
+                    backgroundColor: colour,
+                    fill: true,
+                    pointBackgroundColor: "#000",
+                    showLine: true
                 })
             })
 
