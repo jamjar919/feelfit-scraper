@@ -6,7 +6,7 @@ import 'chartjs-adapter-moment';
 const MemberCountGraph: React.FC = () => {
     const data = useMemberCount()
         .map(({ timestamp, count }) => ({
-            x: new Date(timestamp),
+            x: Date.parse(timestamp),
             y: count
         }));
 

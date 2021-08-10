@@ -2,8 +2,6 @@ import {whoIsInCount, WhoIsInCountResponse} from "./feelfit/whoIsInCount";
 import {FEELFIT_CLUB_ID} from "./feelfit/constants";
 import {writeCountToDatabase} from "./db/writeCountToDatabase";
 
-const LOG_FILE = __dirname + '/log/whoisin.csv'
-
 const doScrape = (bearer: string) => {
     whoIsInCount(bearer)
         .then((data: WhoIsInCountResponse) => data
@@ -21,4 +19,4 @@ const startScraping = (interval: number, bearer: string) => {
     setInterval(() => doScrape(bearer), interval);
 };
 
-export { startScraping, LOG_FILE };
+export { startScraping };

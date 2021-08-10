@@ -1,5 +1,5 @@
 type MemberCountResponse = {
-    timestamp: number;
+    timestamp: string;
     count: number;
 }[];
 
