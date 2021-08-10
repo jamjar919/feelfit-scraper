@@ -2,7 +2,9 @@ import express from "express";
 import dotenv from "dotenv";
 import {startScraping} from "./scrape";
 import {Path} from "../common/Path";
-import {getMemberCountOverTime} from "./routes/getMemberCountOverTime";
+import {getMemberCountForDay} from "./routes/getMemberCountForDay";
+import {getCountForWeekFromDatabase} from "./routes/getCountForWeekFromDatabase";
+import {getCountForLastDay} from "./routes/getCountForLastDay";
 
 dotenv.config();
 
@@ -16,7 +18,9 @@ app.use(express.static(__dirname + "/public"));
 app.use(express.static(__dirname + "/client"));
 
 // api
-app.get(Path.GET_COUNT, getMemberCountOverTime);
+app.get(Path.GET_COUNT_DAY, getMemberCountForDay);
+app.get(Path.GET_COUNT_LAST_DAY, getCountForLastDay);
+app.get(Path.GET_COUNT_LAST_WEEK, getCountForWeekFromDatabase);
 
 app.listen(port, () => {
     console.log(`Active on port ${port}!`);

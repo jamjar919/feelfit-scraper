@@ -1,7 +1,7 @@
 import {connectionPool} from "./db";
 import {MemberCountResponse} from "../../common/ApiResponse";
 
-const QUERY = "SELECT * FROM `feelfit` WHERE DATE(timestamp) = ? ORDER BY `timestamp` DESC"
+const QUERY = "SELECT timestamp, count as date FROM `feelfit` WHERE DATE(timestamp) = ? ORDER BY `timestamp` DESC"
 
 const convertDateToMySqlDate = (date: Date) => date
     .toISOString()
@@ -10,18 +10,10 @@ const convertDateToMySqlDate = (date: Date) => date
 const getCountFromDatabase = (date: Date, handleResults: (results: MemberCountResponse) => void) => {
     const timestamp = convertDateToMySqlDate(date);
 
-    console.log(timestamp);
-
     connectionPool.query(QUERY, timestamp, (error, results) => {
         if (error) throw error;
 
-        const filteredResults: MemberCountResponse = results
-            .map((row: any) => ({
-                timestamp: row.timestamp as string,
-                count: row.count as number
-            }))
-
-        handleResults(filteredResults);
+        handleResults(results);
     });
 };
 
