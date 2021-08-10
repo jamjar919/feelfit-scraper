@@ -5,6 +5,7 @@ import 'chartjs-adapter-moment';
 import {Weekday} from "../../../../common/ApiResponse";
 
 import "./MemberCountGraph.scss";
+import {getColourForWeekday} from "./getColourForWeekday";
 
 const MemberCountGraph: React.FC = () => {
     const memberCount = useMemberCount();
@@ -42,9 +43,13 @@ const MemberCountGraph: React.FC = () => {
 
         const datasets = Object.entries(datasetsArray)
             .map(([weekday, entries]) => {
+                const dayOfWeek: number = Number(weekday);
+                const colour: string = getColourForWeekday(dayOfWeek);
+
                 return ({
-                    label: Weekday[Number(weekday)],
-                    data: entries
+                    label: Weekday[dayOfWeek],
+                    data: entries,
+                    backgroundColor: colour
                 })
             })
 

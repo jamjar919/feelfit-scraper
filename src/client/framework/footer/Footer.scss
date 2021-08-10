@@ -2,4 +2,24 @@
   padding: 1em;
   border-top: 5px solid #000;
   text-align: center;
+
+  ul {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+
+    li {
+      padding: 0 1em;
+      border-left: 1px solid #000;
+      border-right: 1px solid #000;
+
+      &:first-child {
+        border-left: none;
+      }
+
+      &:last-child {
+        border-right: none;
+      }
+    }
+  }
 }
