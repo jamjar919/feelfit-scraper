@@ -36,5 +36,8 @@ module.exports = {
     },
     plugins: [
         new NodemonPlugin()
-    ]
+    ],
+    optimization: {
+        minimize: false
+    }
 };

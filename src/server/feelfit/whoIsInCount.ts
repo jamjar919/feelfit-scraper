@@ -27,4 +27,4 @@ const whoIsInCount = (bearer: string): Promise<WhoIsInCountResponse> => {
         });
 }
 
-export { whoIsInCount, WhoIsInCountResponse };
+export { whoIsInCount, WhoIsInCountResponse, WhoIsInCount };
