@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
-import {MemberCountResponse} from "../../../common/ApiResponse";
-import {Path} from "../../../common/Path";
+import {MemberCountResponse} from "../../../../common/ApiResponse";
+import {Path} from "../../../../common/Path";
 
 const MemberCountContext = React.createContext<MemberCountResponse>([]);
 

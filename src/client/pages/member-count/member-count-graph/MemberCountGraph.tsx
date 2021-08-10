@@ -2,7 +2,9 @@ import React, {useMemo} from "react";
 import {useMemberCount} from "../member-count-provider/MemberCountProvider";
 import {Line} from "react-chartjs-2";
 import 'chartjs-adapter-moment';
-import {Weekday} from "../../../common/ApiResponse";
+import {Weekday} from "../../../../common/ApiResponse";
+
+import "./MemberCountGraph.scss";
 
 const MemberCountGraph: React.FC = () => {
     const memberCount = useMemberCount();
@@ -51,6 +53,7 @@ const MemberCountGraph: React.FC = () => {
         const data = { datasets };
 
         return <Line
+            className="memberCountGraph"
             data={data}
             options={options}
         />;

@@ -1,8 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {Main} from "./pages/Main";
+import {MemberCount} from "./pages/member-count/MemberCount";
+
+import "./reset.scss";
+import "./typography.scss";
 
 ReactDOM.render(
-    <Main />,
+    <MemberCount />,
     document.getElementById('app')
 );
