@@ -4,7 +4,7 @@ import {startScraping} from "./scrape";
 import {Path} from "../common/Path";
 import {getMemberCountForDay} from "./routes/getMemberCountForDay";
 import {getCountForWeekFromDatabase} from "./routes/getCountForWeekFromDatabase";
-import {getCountForLastDay} from "./routes/getCountForLastDay";
+import {getPredictedCountForLastDay} from "./routes/getPredictedCountForLastDay";
 
 dotenv.config();
 
@@ -19,7 +19,7 @@ app.use(express.static(__dirname + "/client"));
 
 // api
 app.get(Path.GET_COUNT_DAY, getMemberCountForDay);
-app.get(Path.GET_COUNT_LAST_DAY, getCountForLastDay);
+app.get(Path.GET_COUNT_PREDICTED_DAY, getPredictedCountForLastDay);
 app.get(Path.GET_COUNT_LAST_WEEK, getCountForWeekFromDatabase);
 
 app.listen(port, () => {

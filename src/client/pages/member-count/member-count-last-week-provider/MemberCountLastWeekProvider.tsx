@@ -2,9 +2,9 @@ import React, {useEffect, useState} from "react";
 import {MemberCountResponse} from "../../../../common/ApiResponse";
 import {Path} from "../../../../common/Path";
 
-const MemberCountContext = React.createContext<MemberCountResponse>([]);
+const MemberCountLastWeekContext = React.createContext<MemberCountResponse>([]);
 
-const MemberCountProvider: React.FC = (props) => {
+const MemberCountLastWeekProvider: React.FC = (props) => {
     const { children } = props;
 
     const [value, setValue] = useState<MemberCountResponse>([]);
@@ -22,9 +22,9 @@ const MemberCountProvider: React.FC = (props) => {
             })
     }, []);
 
-    return <MemberCountContext.Provider value={value}>{children}</MemberCountContext.Provider>
+    return <MemberCountLastWeekContext.Provider value={value}>{children}</MemberCountLastWeekContext.Provider>
 }
 
-const useMemberCount = () => React.useContext(MemberCountContext);
+const useMemberCountLastWeek = () => React.useContext(MemberCountLastWeekContext);
 
-export { MemberCountProvider, useMemberCount };
+export { MemberCountLastWeekProvider, useMemberCountLastWeek };

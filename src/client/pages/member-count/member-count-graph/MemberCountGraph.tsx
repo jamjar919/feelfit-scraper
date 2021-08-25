@@ -1,14 +1,17 @@
 import React, {useMemo} from "react";
-import {useMemberCount} from "../member-count-provider/MemberCountProvider";
 import {Line} from "react-chartjs-2";
 import 'chartjs-adapter-moment';
-import {Weekday} from "../../../../common/ApiResponse";
-
-import "./MemberCountGraph.scss";
+import {MemberCountResponse, Weekday} from "../../../../common/ApiResponse";
 import {getColourForWeekday} from "./getColourForWeekday";
 
-const MemberCountGraph: React.FC = () => {
-    const memberCount = useMemberCount();
+import "./MemberCountGraph.scss";
+
+type MemberCountGraphProps = {
+    getData: () => MemberCountResponse
+}
+
+const MemberCountGraph: React.FC<MemberCountGraphProps> = (props) => {
+    const memberCount = props.getData();
 
     const options = {
         scales: {
