@@ -59,8 +59,6 @@ const MemberCountGraph: React.FC<MemberCountGraphProps> = (props) => {
                 })
             })
 
-        console.log(datasets);
-
         const data = { datasets };
 
         return <Line

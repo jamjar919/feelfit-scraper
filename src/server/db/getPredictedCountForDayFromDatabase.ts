@@ -45,7 +45,7 @@ const binResultsPerMinute = (
                     counts: []
                 };
             }
-            
+
             currentBin.counts.push(count);
         })
 
@@ -76,16 +76,16 @@ const getPredictedCountForDayFromDatabase = (handleResults: (results: PredictedC
         // Calculate quartiles and return
         const resultsWithQuartiles = binnedResults
             .map(({minute, counts}) => {
-                const hours = Math.floor(minute / 60);
+                const hour = Math.floor(minute / 60);
 
                 return {
-                    hours,
-                    minute: minute - hours * 60,
+                    hour,
+                    minute: minute - hour * 60,
                     quartiles: getQuartiles(counts)
                 };
             });
 
-        handleResults(resultsWithQuartiles as any);
+        handleResults(resultsWithQuartiles);
     });
 };
 

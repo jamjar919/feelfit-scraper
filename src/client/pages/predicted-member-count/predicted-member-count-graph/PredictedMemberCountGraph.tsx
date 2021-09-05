@@ -8,6 +8,8 @@ type PredictedMemberCountGraphProps = {
 const PredictedMemberCountGraph: React.FC<PredictedMemberCountGraphProps> = (props) => {
     const memberCount = props.getData();
 
+    console.log(memberCount);
+
     return (
         <div>
             {JSON.stringify(memberCount)}

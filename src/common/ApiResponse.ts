@@ -1,8 +1,9 @@
 const Weekday: string[] = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
 
 type PredictedCountResponse = {
-    time: string;
-    count: number;
+    hour: number;
+    minute: number;
+    quartiles: number[];
 }[]
 
 type MemberCountResponse = {
