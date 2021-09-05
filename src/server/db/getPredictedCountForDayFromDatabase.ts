@@ -1,14 +1,61 @@
 import {connectionPool} from "./db";
-import {MemberCountResponse} from "../../common/ApiResponse";
+import {PredictedCountResponse} from "../../common/ApiResponse";
 
-const QUERY = "SELECT timestamp, count as date FROM `feelfit` ORDER BY `timestamp` DESC"
+const QUERY = "SELECT timestamp, count FROM `feelfit` WHERE WEEKDAY(DATE(timestamp)) = WEEKDAY(NOW()) ORDER BY `timestamp` DESC"
 
-const getPredictedCountForDayFromDatabase = (handleResults: (results: MemberCountResponse) => void) => {
+type Bucket = {
+    minute: number;
+    counts: number[];
+};
 
-    connectionPool.query(QUERY, (error, results) => {
+const getMinutesSinceStartOfDay = (timestamp: Date) => timestamp.getUTCHours() * 60 + timestamp.getUTCMinutes();
+
+const getPredictedCountForDayFromDatabase = (handleResults: (results: PredictedCountResponse) => void) => {
+
+    connectionPool.query(QUERY, (error, results: { timestamp: string; count: number; }[]) => {
         if (error) throw error;
 
-        handleResults(results);
+        // Bin the results every 15 mins
+        const parsedResults: {
+            timestamp: Date,
+            count: number
+        }[] = results
+            .map(({ count, timestamp }) => ({ count, timestamp: new Date(timestamp) }))
+            .sort((a, b) =>
+                getMinutesSinceStartOfDay(a.timestamp) < getMinutesSinceStartOfDay(b.timestamp) ? -1 : 1
+            );
+
+        let currentMin = 0;
+        let minIncrement = 15;
+        const buckets: Bucket[] = []
+
+        let currentBucket: Bucket = {
+            minute: currentMin,
+            counts: []
+        };
+
+        parsedResults
+            .forEach(({ count, timestamp }) => {
+                let minutesSinceStartOfDay = getMinutesSinceStartOfDay(timestamp);
+
+                console.log("minutesSinceStartOfDay", minutesSinceStartOfDay);
+
+                while (
+                    (currentMin < minutesSinceStartOfDay + minIncrement)
+                ) {
+                    buckets.push(currentBucket);
+
+                    currentMin += minIncrement;
+                    currentBucket = {
+                        minute: currentMin,
+                        counts: []
+                    };
+                }
+
+                currentBucket.counts.push(count);
+            })
+
+        handleResults(buckets as any);
     });
 };
 
