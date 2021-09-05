@@ -12,14 +12,4 @@ type MemberCountResponse = {
     weekday: number;
 }[];
 
-type PredictedMemberCountResponse = {
-    timestamp: string;
-    count: number;
-    range: {
-        min: number;
-        max: number;
-    };
-    isPredicted: boolean;
-}[]
-
-export { MemberCountResponse, PredictedMemberCountResponse, Weekday, PredictedCountResponse };
+export { MemberCountResponse, Weekday, PredictedCountResponse };

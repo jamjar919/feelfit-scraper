@@ -1,13 +1,13 @@
 import React, {useEffect, useState} from "react";
-import {PredictedMemberCountResponse} from "../../../../common/ApiResponse";
 import {Path} from "../../../../common/Path";
+import {PredictedCountResponse} from "../../../../common/ApiResponse";
 
-const MemberCountDayContext = React.createContext<PredictedMemberCountResponse>([]);
+const MemberCountDayContext = React.createContext<PredictedCountResponse>([]);
 
 const PredictedMemberCountProvider: React.FC = (props) => {
     const { children } = props;
 
-    const [value, setValue] = useState<PredictedMemberCountResponse>([]);
+    const [value, setValue] = useState<PredictedCountResponse>([]);
 
     useEffect(() => {
         setValue([]);
