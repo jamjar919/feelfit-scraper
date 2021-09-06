@@ -15,18 +15,17 @@ const MemberCount: React.FC = () => {
     return (
         <PageContainer>
             <div>
-                <div>
-                    <PredictedMemberCountProvider>
-                        <PredictedMemberCountGraph getData={() => usePredictedMemberCount()} />
-                    </PredictedMemberCountProvider>
-                </div>
-                <div>
-
-                </div>
+                <h1>Predicted Traffic for Today</h1>
+                <PredictedMemberCountProvider>
+                    <PredictedMemberCountGraph getData={() => usePredictedMemberCount()} />
+                </PredictedMemberCountProvider>
             </div>
-            <MemberCountLastWeekProvider>
-                <MemberCountGraph getData={() => useMemberCountLastWeek()} />
-            </MemberCountLastWeekProvider>
+            <div>
+                <h1>Last Week Traffic</h1>
+                <MemberCountLastWeekProvider>
+                    <MemberCountGraph getData={() => useMemberCountLastWeek()} />
+                </MemberCountLastWeekProvider>
+            </div>
         </PageContainer>
     )
 }

@@ -59,9 +59,11 @@ const getQuartiles = (counts: number[]) => {
     const sorted = counts.sort((a, b) => a < b ? -1 : 1);
 
     return [
+        sorted[0],
         sorted[Math.floor(size * 0.25)],
         sorted[Math.floor(size * 0.5)],
         sorted[Math.floor(size * 0.75)],
+        sorted[counts.length - 1]
     ].map((quartile: number) => typeof quartile === "undefined" ? 0 : quartile);
 };
 

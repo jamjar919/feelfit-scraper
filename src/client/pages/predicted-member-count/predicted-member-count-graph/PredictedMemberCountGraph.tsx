@@ -27,6 +27,10 @@ const PredictedMemberCountGraph: React.FC<PredictedMemberCountGraphProps> = (pro
     };
 
     const graph = useMemo(() => {
+        const min = {
+            label: "Minimum",
+            data: [] as Datapoint[],
+        };
         const firstQuartile = {
             label: "First Quartile",
             data: [] as Datapoint[],
@@ -46,21 +50,29 @@ const PredictedMemberCountGraph: React.FC<PredictedMemberCountGraphProps> = (pro
             fill: '-1',
             backgroundColor: "#078080"
         };
+        const max = {
+            label: "Maximum",
+            data: [] as Datapoint[],
+        };
 
         memberCount.forEach(({
              hour, minute, quartiles
         }) => {
             const x = `${hour}:${minute}`;
 
-            firstQuartile.data.push({ x, y: quartiles[0] });
-            secondQuartile.data.push({ x, y: quartiles[1] });
-            thirdQuartile.data.push({ x, y: quartiles[2] });
+            min.data.push({ x, y: quartiles[0] });
+            firstQuartile.data.push({ x, y: quartiles[1] });
+            secondQuartile.data.push({ x, y: quartiles[2] });
+            thirdQuartile.data.push({ x, y: quartiles[3] });
+            max.data.push({ x, y: quartiles[4] });
         })
 
         const datasets = [
+            min,
             firstQuartile,
             secondQuartile,
-            thirdQuartile
+            thirdQuartile,
+            max
         ];
 
         const data = { datasets };
