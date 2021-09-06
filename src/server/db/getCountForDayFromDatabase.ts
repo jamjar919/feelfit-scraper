@@ -21,7 +21,7 @@ const getCountForDayFromDatabase = (handleResults: (results: DailyMemberCountRes
 
                     const hour = Math.floor(minutesSinceStartOfDay / 60);
                     const minute = minutesSinceStartOfDay - hour * 60;
-
+                    
                     return { hour, minute, count };
                 })
         );
