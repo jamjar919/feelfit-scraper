@@ -1,6 +1,7 @@
 import {connectionPool} from "./db";
 import {DailyPredictedMemberCountResponse} from "../../common/ApiResponse";
 import {getMinutesSinceStartOfDay} from "../util/getMinutesSinceStartOfDay";
+import {toGMT} from "../util/toGMT";
 
 const QUERY = "SELECT timestamp, count FROM `feelfit` WHERE WEEKDAY(DATE(timestamp)) = WEEKDAY(NOW()) ORDER BY `timestamp` DESC"
 
@@ -18,7 +19,7 @@ const binResultsPerMinute = (
         timestamp: Date,
         count: number
     }[] = results
-        .map(({ count, timestamp }) => ({ count, timestamp: new Date(timestamp) }))
+        .map(({ count, timestamp }) => ({ count, timestamp: toGMT(timestamp) }))
         .sort((a, b) =>
             getMinutesSinceStartOfDay(a.timestamp) < getMinutesSinceStartOfDay(b.timestamp) ? -1 : 1
         );
