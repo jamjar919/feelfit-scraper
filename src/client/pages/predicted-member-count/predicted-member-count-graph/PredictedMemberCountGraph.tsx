@@ -1,9 +1,10 @@
 import React, {useMemo} from 'react';
-import {PredictedCountResponse} from "../../../../common/ApiResponse";
+import {DailyMemberCountResponse, DailyPredictedMemberCountResponse} from "../../../../common/ApiResponse";
 import {Line} from "react-chartjs-2";
 
 type PredictedMemberCountGraphProps = {
-    getData: () => PredictedCountResponse
+    getPredicted: () => DailyPredictedMemberCountResponse;
+    getCurrent: () => DailyMemberCountResponse;
 }
 
 type Datapoint = {
@@ -12,7 +13,7 @@ type Datapoint = {
 }
 
 const PredictedMemberCountGraph: React.FC<PredictedMemberCountGraphProps> = (props) => {
-    const memberCount = props.getData();
+    const predictedMemberCount = props.getPredicted();
 
     const options = {
         scales: {
@@ -55,7 +56,7 @@ const PredictedMemberCountGraph: React.FC<PredictedMemberCountGraphProps> = (pro
             data: [] as Datapoint[],
         };
 
-        memberCount.forEach(({
+        predictedMemberCount.forEach(({
              hour, minute, quartiles
         }) => {
             const x = `${hour}:${minute}`;
@@ -81,7 +82,7 @@ const PredictedMemberCountGraph: React.FC<PredictedMemberCountGraphProps> = (pro
             data={data}
             options={options}
         />;
-    }, [memberCount])
+    }, [predictedMemberCount])
 
 
     return (graph);

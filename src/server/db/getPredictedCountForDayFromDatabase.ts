@@ -1,5 +1,6 @@
 import {connectionPool} from "./db";
-import {PredictedCountResponse} from "../../common/ApiResponse";
+import {DailyPredictedMemberCountResponse} from "../../common/ApiResponse";
+import {getMinutesSinceStartOfDay} from "../util/getMinutesSinceStartOfDay";
 
 const QUERY = "SELECT timestamp, count FROM `feelfit` WHERE WEEKDAY(DATE(timestamp)) = WEEKDAY(NOW()) ORDER BY `timestamp` DESC"
 
@@ -8,7 +9,6 @@ type Bin = {
     counts: number[];
 };
 
-const getMinutesSinceStartOfDay = (timestamp: Date) => timestamp.getUTCHours() * 60 + timestamp.getUTCMinutes();
 
 const binResultsPerMinute = (
     results: { timestamp: string; count: number; }[],
@@ -67,7 +67,7 @@ const getQuartiles = (counts: number[]) => {
     ].map((quartile: number) => typeof quartile === "undefined" ? 0 : quartile);
 };
 
-const getPredictedCountForDayFromDatabase = (handleResults: (results: PredictedCountResponse) => void) => {
+const getPredictedCountForDayFromDatabase = (handleResults: (results: DailyPredictedMemberCountResponse) => void) => {
 
     connectionPool.query(QUERY, (error, results: { timestamp: string; count: number; }[]) => {
         if (error) throw error;

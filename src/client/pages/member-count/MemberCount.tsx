@@ -10,22 +10,31 @@ import {
     usePredictedMemberCount
 } from "../predicted-member-count/predicted-member-count-provider/PredictedMemberCountProvider";
 import {PredictedMemberCountGraph} from "../predicted-member-count/predicted-member-count-graph/PredictedMemberCountGraph";
+import {
+    DailyMemberCountProvider,
+    useDailyMemberCount
+} from "../predicted-member-count/daily-member-count-provider/DailyMemberCountProvider";
 
 const MemberCount: React.FC = () => {
     return (
         <PageContainer>
-            <div>
-                <h1>Predicted Traffic for Today</h1>
-                <PredictedMemberCountProvider>
-                    <PredictedMemberCountGraph getData={() => usePredictedMemberCount()} />
-                </PredictedMemberCountProvider>
-            </div>
-            <div>
-                <h1>Last Week Traffic</h1>
-                <MemberCountLastWeekProvider>
-                    <MemberCountGraph getData={() => useMemberCountLastWeek()} />
-                </MemberCountLastWeekProvider>
-            </div>
+            <DailyMemberCountProvider>
+                <div>
+                    <h1>Predicted Traffic for Today</h1>
+                    <PredictedMemberCountProvider>
+                        <PredictedMemberCountGraph
+                            getCurrent={() => useDailyMemberCount()}
+                            getPredicted={() => usePredictedMemberCount()}
+                        />
+                    </PredictedMemberCountProvider>
+                </div>
+                <div>
+                    <h1>Last Week Traffic</h1>
+                    <MemberCountLastWeekProvider>
+                        <MemberCountGraph getData={() => useMemberCountLastWeek()} />
+                    </MemberCountLastWeekProvider>
+                </div>
+            </DailyMemberCountProvider>
         </PageContainer>
     )
 }

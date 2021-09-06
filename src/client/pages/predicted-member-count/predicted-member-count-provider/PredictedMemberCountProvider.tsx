@@ -1,30 +1,7 @@
-import React, {useEffect, useState} from "react";
 import {Path} from "../../../../common/Path";
-import {PredictedCountResponse} from "../../../../common/ApiResponse";
+import {DailyPredictedMemberCountResponse} from "../../../../common/ApiResponse";
+import {getAjaxProvider} from "../../../framework/provider/AjaxProviderFactory";
 
-const MemberCountDayContext = React.createContext<PredictedCountResponse>([]);
+const { Provider, useProvider } = getAjaxProvider<DailyPredictedMemberCountResponse>(Path.GET_COUNT_PREDICTED_DAY, [])
 
-const PredictedMemberCountProvider: React.FC = (props) => {
-    const { children } = props;
-
-    const [value, setValue] = useState<PredictedCountResponse>([]);
-
-    useEffect(() => {
-        setValue([]);
-
-        fetch(Path.GET_COUNT_PREDICTED_DAY)
-            .then((resp) => resp.json())
-            .then((data) => setValue(data))
-            .catch((error) => {
-                console.error(error);
-
-                setValue([]);
-            })
-    }, []);
-
-    return <MemberCountDayContext.Provider value={value}>{children}</MemberCountDayContext.Provider>
-}
-
-const usePredictedMemberCount = () => React.useContext(MemberCountDayContext);
-
-export { PredictedMemberCountProvider, usePredictedMemberCount };
+export { Provider as PredictedMemberCountProvider, useProvider as usePredictedMemberCount };

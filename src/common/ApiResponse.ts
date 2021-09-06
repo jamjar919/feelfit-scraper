@@ -1,15 +1,21 @@
 const Weekday: string[] = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
 
-type PredictedCountResponse = {
+type DailyPredictedMemberCountResponse = {
     hour: number;
     minute: number;
     quartiles: number[];
 }[]
 
-type MemberCountResponse = {
+type DailyMemberCountResponse = {
+    hour: number;
+    minute: number;
+    count: number;
+}[]
+
+type WeeklyMemberCountResponse = {
     timestamp: string;
     count: number;
     weekday: number;
 }[];
 
-export { MemberCountResponse, Weekday, PredictedCountResponse };
+export { WeeklyMemberCountResponse, Weekday, DailyPredictedMemberCountResponse, DailyMemberCountResponse };
