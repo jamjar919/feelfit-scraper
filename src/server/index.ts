@@ -12,7 +12,7 @@ const app = express();
 const port = process.env.PORT || 80;
 const interval = Number(process.env.SCRAPE_INTERVAL) || 30_0000; // 5 mins
 const bearer = process.env.BEARER || "";
-const doScrape = process.env.ENABLE_SCRAPE || false;
+const doScrape = Boolean(process.env.ENABLE_SCRAPE) || false;
 
 app.use(express.json());
 app.use(express.static(__dirname + "/public"));
