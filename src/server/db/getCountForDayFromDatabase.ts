@@ -18,7 +18,7 @@ const getCountForDayFromDatabase = (handleResults: (results: DailyMemberCountRes
                 return {
                     hour,
                     minute: minute - hour * 60,
-                    count: counts.reduce((a, b) => (a + b)) / counts.length
+                    count: (counts.reduce((a, b) => (a + b), 0) / counts.length) || 0
                 };
             })
 

@@ -12,6 +12,12 @@ type Datapoint = {
     y: number;
 }
 
+const formatLabel = (hour: number, minute: number) => {
+    const formattedMinute = minute === 0 ? "00" : minute;
+
+    return `${hour}:${formattedMinute}`
+}
+
 const PredictedMemberCountGraph: React.FC<PredictedMemberCountGraphProps> = (props) => {
     const predictedMemberCount = props.getPredicted();
     const currentMemberCount = props.getCurrent();
@@ -67,7 +73,7 @@ const PredictedMemberCountGraph: React.FC<PredictedMemberCountGraphProps> = (pro
         predictedMemberCount.forEach(({
              hour, minute, quartiles
         }) => {
-            const x = `${hour}:${minute}`;
+            const x = formatLabel(hour, minute);
 
             // Only include quartile data if the current member count has not been shown for that time period
             const matching = currentMemberCount.find(
@@ -92,7 +98,7 @@ const PredictedMemberCountGraph: React.FC<PredictedMemberCountGraphProps> = (pro
         currentMemberCount.forEach(({
             hour, minute, count
         }) => {
-            const x = `${hour}:${minute}`;
+            const x = formatLabel(hour, minute);
 
             current.data.push({ x, y: count })
         })

@@ -30,9 +30,7 @@ const binResultsPerMinute = (
         .forEach(({ count, timestamp }) => {
             let minutesSinceStartOfDay = getMinutesSinceStartOfDay(timestamp);
 
-            while (
-                (currentMin + minIncrement < minutesSinceStartOfDay)
-                ) {
+            while (currentMin + minIncrement < minutesSinceStartOfDay) {
                 buckets.push(currentBin);
 
                 currentMin += minIncrement;

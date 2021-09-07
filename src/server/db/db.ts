@@ -15,4 +15,10 @@ const connectionPool = mysql.createPool({
     timezone: 'GMT'
 });
 
+connectionPool.on('connection', (connection) => {
+    connection.query("SET time_zone='+00:00';", (error: Error) => {
+        if (error) throw error;
+    })
+})
+
 export { connectionPool };

@@ -1,3 +1,3 @@
-const getMinutesSinceStartOfDay = (timestamp: Date) => timestamp.getUTCHours() * 60 + timestamp.getUTCMinutes();
+const getMinutesSinceStartOfDay = (timestamp: Date) => timestamp.getHours() * 60 + timestamp.getMinutes();
 
 export { getMinutesSinceStartOfDay }
