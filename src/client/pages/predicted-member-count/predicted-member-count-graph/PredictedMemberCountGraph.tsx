@@ -14,6 +14,7 @@ type Datapoint = {
 
 const PredictedMemberCountGraph: React.FC<PredictedMemberCountGraphProps> = (props) => {
     const predictedMemberCount = props.getPredicted();
+    const currentMemberCount = props.getCurrent();
 
     const options = {
         scales: {
@@ -28,6 +29,13 @@ const PredictedMemberCountGraph: React.FC<PredictedMemberCountGraphProps> = (pro
     };
 
     const graph = useMemo(() => {
+        const current = {
+            label: "Current",
+            data: [] as Datapoint[],
+            showLine: true,
+            pointBackgroundColor: "#000",
+            borderColor: '#000',
+        }
         const min = {
             label: "Minimum",
             data: [] as Datapoint[],
@@ -61,14 +69,36 @@ const PredictedMemberCountGraph: React.FC<PredictedMemberCountGraphProps> = (pro
         }) => {
             const x = `${hour}:${minute}`;
 
-            min.data.push({ x, y: quartiles[0] });
-            firstQuartile.data.push({ x, y: quartiles[1] });
-            secondQuartile.data.push({ x, y: quartiles[2] });
-            thirdQuartile.data.push({ x, y: quartiles[3] });
-            max.data.push({ x, y: quartiles[4] });
+            // Only include quartile data if the current member count has not been shown for that time period
+            const matching = currentMemberCount.find(
+                (value) => (value.hour === hour) && (value.minute === minute)
+            );
+
+            if (typeof matching === "undefined") {
+                firstQuartile.data.push({x, y: quartiles[1]});
+                secondQuartile.data.push({x, y: quartiles[2]});
+                thirdQuartile.data.push({x, y: quartiles[3]});
+            } else {
+                // Else set it to the known count
+                firstQuartile.data.push({x, y: matching.count});
+                secondQuartile.data.push({x, y: matching.count});
+                thirdQuartile.data.push({x, y: matching.count});
+            }
+
+            min.data.push({x, y: quartiles[0]});
+            max.data.push({x, y: quartiles[4]});
+        })
+
+        currentMemberCount.forEach(({
+            hour, minute, count
+        }) => {
+            const x = `${hour}:${minute}`;
+
+            current.data.push({ x, y: count })
         })
 
         const datasets = [
+            current,
             min,
             firstQuartile,
             secondQuartile,
@@ -82,7 +112,7 @@ const PredictedMemberCountGraph: React.FC<PredictedMemberCountGraphProps> = (pro
             data={data}
             options={options}
         />;
-    }, [predictedMemberCount])
+    }, [predictedMemberCount, currentMemberCount])
 
 
     return (graph);

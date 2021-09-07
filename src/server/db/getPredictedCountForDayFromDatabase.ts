@@ -1,59 +1,8 @@
 import {connectionPool} from "./db";
 import {DailyPredictedMemberCountResponse} from "../../common/ApiResponse";
-import {getMinutesSinceStartOfDay} from "../util/getMinutesSinceStartOfDay";
-import {toGMT} from "../util/toGMT";
+import {binResultsPerMinute} from "../util/binResultsPerMinute";
 
 const QUERY = "SELECT timestamp, count FROM `feelfit` WHERE WEEKDAY(DATE(timestamp)) = WEEKDAY(NOW()) ORDER BY `timestamp` DESC"
-
-type Bin = {
-    minute: number;
-    counts: number[];
-};
-
-
-const binResultsPerMinute = (
-    results: { timestamp: string; count: number; }[],
-    minIncrement: number
-): Bin[] => {
-    const parsedResults: {
-        timestamp: Date,
-        count: number
-    }[] = results
-        .map(({ count, timestamp }) => ({ count, timestamp: toGMT(timestamp) }))
-        .sort((a, b) =>
-            getMinutesSinceStartOfDay(a.timestamp) < getMinutesSinceStartOfDay(b.timestamp) ? -1 : 1
-        );
-
-    let currentMin = 0;
-    let currentBin: Bin = {
-        minute: currentMin,
-        counts: []
-    };
-
-    const buckets: Bin[] = []
-    parsedResults
-        .forEach(({ count, timestamp }) => {
-            let minutesSinceStartOfDay = getMinutesSinceStartOfDay(timestamp);
-
-            while (
-                (currentMin + minIncrement < minutesSinceStartOfDay)
-            ) {
-                buckets.push(currentBin);
-
-                currentMin += minIncrement;
-                currentBin = {
-                    minute: currentMin,
-                    counts: []
-                };
-            }
-
-            currentBin.counts.push(count);
-        })
-
-    buckets.push(currentBin);
-
-    return buckets;
-}
 
 const getQuartiles = (counts: number[]) => {
     const size = counts.length;
