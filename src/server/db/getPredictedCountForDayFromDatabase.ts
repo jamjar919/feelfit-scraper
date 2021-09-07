@@ -2,7 +2,7 @@ import {connectionPool} from "./db";
 import {DailyPredictedMemberCountResponse} from "../../common/ApiResponse";
 import {binResultsPerMinute} from "../util/binResultsPerMinute";
 
-const QUERY = "SELECT timestamp, count FROM `feelfit` WHERE WEEKDAY(DATE(timestamp)) = WEEKDAY(NOW()) ORDER BY `timestamp` DESC"
+const QUERY = "SELECT timestamp, count FROM `feelfit` WHERE WEEKDAY(DATE(timestamp)) = WEEKDAY(DATE(NOW())) ORDER BY `timestamp` DESC"
 
 const getQuartiles = (counts: number[]) => {
     const size = counts.length;

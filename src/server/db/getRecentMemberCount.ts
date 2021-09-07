@@ -1,6 +1,5 @@
 import {connectionPool} from "./db";
 import {WeeklyMemberCountResponse} from "../../common/ApiResponse";
-import {toGMT} from "../util/toGMT";
 
 const QUERY = "SELECT timestamp, count, WEEKDAY(DATE(timestamp)) as weekday FROM `feelfit` WHERE DATE(timestamp) > DATE_SUB(DATE(NOW()), INTERVAL ? DAY) ORDER BY `timestamp` DESC"
 
@@ -11,7 +10,7 @@ const getRecentMemberCount = (days: number, handleResults: (results: WeeklyMembe
         handleResults(
             results
                 .map(({ timestamp, count, weekday }) => ({
-                    timestamp: toGMT(timestamp).toISOString(),
+                    timestamp: new Date(timestamp).toISOString(),
                     count,
                     weekday
                 }))

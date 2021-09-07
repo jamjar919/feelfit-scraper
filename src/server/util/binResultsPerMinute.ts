@@ -1,4 +1,3 @@
-import {toGMT} from "./toGMT";
 import {getMinutesSinceStartOfDay} from "./getMinutesSinceStartOfDay";
 
 type Bin = {
@@ -11,12 +10,17 @@ const binResultsPerMinute = (
     minIncrement: number
 ): Bin[] => {
     const parsedResults: {
-        timestamp: Date,
+        hour: number,
+        minute: number,
         count: number
     }[] = results
-        .map(({ count, timestamp }) => ({ count, timestamp: toGMT(timestamp) }))
+        .map(({ timestamp, count }) => ({
+            count,
+            hour: Number(timestamp.slice(11, 13)),
+            minute: Number(timestamp.slice(14, 16))
+        }))
         .sort((a, b) =>
-            getMinutesSinceStartOfDay(a.timestamp) < getMinutesSinceStartOfDay(b.timestamp) ? -1 : 1
+            getMinutesSinceStartOfDay(a.hour, a.minute) < getMinutesSinceStartOfDay(b.hour, b.minute) ? -1 : 1
         );
 
     let currentMin = 0;
@@ -27,8 +31,8 @@ const binResultsPerMinute = (
 
     const buckets: Bin[] = []
     parsedResults
-        .forEach(({ count, timestamp }) => {
-            let minutesSinceStartOfDay = getMinutesSinceStartOfDay(timestamp);
+        .forEach(({ count, hour, minute }) => {
+            let minutesSinceStartOfDay = getMinutesSinceStartOfDay(hour, minute);
 
             while (currentMin + minIncrement < minutesSinceStartOfDay) {
                 buckets.push(currentBin);

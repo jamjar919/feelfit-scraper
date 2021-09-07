@@ -1,3 +1,3 @@
-const getMinutesSinceStartOfDay = (timestamp: Date) => timestamp.getHours() * 60 + timestamp.getMinutes();
+const getMinutesSinceStartOfDay = (hours: number, minutes: number) => hours * 60 + minutes;
 
 export { getMinutesSinceStartOfDay }
