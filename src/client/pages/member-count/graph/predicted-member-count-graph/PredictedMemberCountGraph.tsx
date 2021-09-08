@@ -1,5 +1,5 @@
 import React, {useMemo} from 'react';
-import {DailyMemberCountResponse, DailyPredictedMemberCountResponse} from "../../../../common/ApiResponse";
+import {DailyMemberCountResponse, DailyPredictedMemberCountResponse} from "../../../../../common/ApiResponse";
 import {Line} from "react-chartjs-2";
 
 type PredictedMemberCountGraphProps = {

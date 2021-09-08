@@ -1,38 +1,44 @@
 import React from 'react';
-import {
-    MemberCountLastWeekProvider,
-    useMemberCountLastWeek
-} from "./member-count-last-week-provider/MemberCountLastWeekProvider";
-import {MemberCountGraph} from "./member-count-graph/MemberCountGraph";
 import {PageContainer} from "../../framework/page-container/PageContainer";
-import {
-    PredictedMemberCountProvider,
-    usePredictedMemberCount
-} from "../predicted-member-count/predicted-member-count-provider/PredictedMemberCountProvider";
-import {PredictedMemberCountGraph} from "../predicted-member-count/predicted-member-count-graph/PredictedMemberCountGraph";
 import {
     DailyMemberCountProvider,
     useDailyMemberCount
-} from "../predicted-member-count/daily-member-count-provider/DailyMemberCountProvider";
+} from "./provider/daily-member-count-provider/DailyMemberCountProvider";
+import {
+    PredictedMemberCountProvider,
+    usePredictedMemberCount
+} from "./provider/predicted-member-count-provider/PredictedMemberCountProvider";
+import {PredictedMemberCountGraph} from "./graph/predicted-member-count-graph/PredictedMemberCountGraph";
+import {
+    MemberCountLastWeekProvider,
+    useMemberCountLastWeek
+} from "./provider/member-count-last-week-provider/MemberCountLastWeekProvider";
+import {MemberCountGraph} from "./graph/member-count-graph/MemberCountGraph";
+
+import "./MemberCount.scss";
 
 const MemberCount: React.FC = () => {
     return (
         <PageContainer>
             <DailyMemberCountProvider>
-                <div>
-                    <h1>Predicted Traffic for Today</h1>
-                    <PredictedMemberCountProvider>
-                        <PredictedMemberCountGraph
-                            getCurrent={() => useDailyMemberCount()}
-                            getPredicted={() => usePredictedMemberCount()}
-                        />
-                    </PredictedMemberCountProvider>
+                <h1>Predicted Traffic for Today</h1>
+                <div className="graph-container">
+                    <div className="graph-wrapper">
+                        <PredictedMemberCountProvider>
+                            <PredictedMemberCountGraph
+                                getCurrent={() => useDailyMemberCount()}
+                                getPredicted={() => usePredictedMemberCount()}
+                            />
+                        </PredictedMemberCountProvider>
+                    </div>
                 </div>
-                <div>
-                    <h1>Last Week Traffic</h1>
-                    <MemberCountLastWeekProvider>
-                        <MemberCountGraph getData={() => useMemberCountLastWeek()} />
-                    </MemberCountLastWeekProvider>
+                <h1>Last Week Traffic</h1>
+                <div className="graph-container">
+                    <div className="graph-wrapper">
+                        <MemberCountLastWeekProvider>
+                            <MemberCountGraph getData={() => useMemberCountLastWeek()} />
+                        </MemberCountLastWeekProvider>
+                    </div>
                 </div>
             </DailyMemberCountProvider>
         </PageContainer>
