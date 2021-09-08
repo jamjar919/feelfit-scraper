@@ -18,10 +18,12 @@ import {MemberCountGraph} from "./graph/member-count-graph/MemberCountGraph";
 import "./MemberCount.scss";
 
 const MemberCount: React.FC = () => {
+    const date = new Date().toDateString();
+
     return (
         <PageContainer>
             <DailyMemberCountProvider>
-                <h1>Predicted Traffic for Today</h1>
+                <h1>Predicted Traffic for Today ({date})</h1>
                 <div className="graph-container">
                     <div className="graph-wrapper">
                         <PredictedMemberCountProvider>
