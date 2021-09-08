@@ -9,11 +9,6 @@ const getRecentMemberCount = (days: number, handleResults: (results: WeeklyMembe
 
         handleResults(
             results
-                .map(({ timestamp, count, weekday }) => ({
-                    timestamp: new Date(timestamp).toISOString(),
-                    count,
-                    weekday
-                }))
         );
     });
 };
